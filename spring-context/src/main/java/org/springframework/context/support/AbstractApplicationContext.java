@@ -486,41 +486,53 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
-			// Prepare this context for refreshing.【刷新上下文的准备工作】
+			// Prepare this context for refreshing.
+			// 刷新上下文的准备工作
 			prepareRefresh();
 
-			// Tell the subclass to refresh the internal bean factory.【告诉子类刷新它内部的bean工厂】
+			// Tell the subclass to refresh the internal bean factory.
+			// 告诉子类刷新它内部的bean工厂
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-			// Prepare the bean factory for use in this context.【准备bean工厂】
+			// Prepare the bean factory for use in this context.
+			// 准备bean工厂
 			prepareBeanFactory(beanFactory);
 
 			try {
-				// Allows post-processing of the bean factory in context subclasses.【允许子容器对bean工厂进行后处理】
+				// Allows post-processing of the bean factory in context subclasses.
+				// 允许子容器对bean工厂进行后处理
 				postProcessBeanFactory(beanFactory);
 
-				// Invoke factory processors registered as beans in the context.【调用工厂处理器(在上下文中注册为bean的)】
+				// Invoke factory processors registered as beans in the context.
+				// 调用工厂处理器(在上下文中注册为bean的)
 				invokeBeanFactoryPostProcessors(beanFactory);
 
-				// Register bean processors that intercept bean creation.【注册(拦截bean创建的)bean处理器】
+				// Register bean processors that intercept bean creation.
+				// 注册(拦截bean创建的)bean处理器
 				registerBeanPostProcessors(beanFactory);
 
-				// Initialize message source for this context.【初始化消息源】
+				// Initialize message source for this context.
+				// 初始化消息源
 				initMessageSource();
 
-				// Initialize event multicaster for this context.【初始化多路广播事件】
+				// Initialize event multicaster for this context.
+				// 初始化多路广播事件
 				initApplicationEventMulticaster();
 
-				// Initialize other special beans in specific context subclasses.【初始化其他特殊的bean在特殊的子容器中】
+				// Initialize other special beans in specific context subclasses.
+				// 初始化其他特殊的bean在特殊的子容器中
 				onRefresh();
 
-				// Check for listener beans and register them.【检查监听beans并注册他们】
+				// Check for listener beans and register them.
+				// 检查监听beans并注册他们
 				registerListeners();
 
-				// Instantiate all remaining (non-lazy-init) singletons.【实例化所有非懒初始化的单例bean】
+				// Instantiate all remaining (non-lazy-init) singletons.
+				// 实例化所有非懒初始化的单例bean
 				finishBeanFactoryInitialization(beanFactory);
 
-				// Last step: publish corresponding event.【最后一步：发布对应的事件】
+				// Last step: publish corresponding event.
+				// 最后一步：发布对应的事件
 				finishRefresh();
 			}
 
