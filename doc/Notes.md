@@ -16,3 +16,7 @@
 21.6.17
 SpringBoot 启动过程：https://www.cnblogs.com/baixianlong/p/11117665.html
 
+
+21.6.18
+单例Bean：private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
+
