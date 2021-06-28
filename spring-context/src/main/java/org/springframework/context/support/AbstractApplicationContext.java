@@ -829,6 +829,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/**
 	 * Finish the initialization of this context's bean factory,
 	 * initializing all remaining singleton beans.
+	 *
+	 * 完成此上下文的bean工厂的初始化，初始化所有剩余的单例bean
+	 *
+	 * 创建 bean 的三个步骤：
+	 * 1. 实例化 bean （执行构造方法）；
+	 * 2. 填充 bean 属性（处理依赖）；
+	 * 3. bean 初始化（执行 init 方法）；
 	 */
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.
@@ -858,6 +865,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.freezeConfiguration();
 
 		// Instantiate all remaining (non-lazy-init) singletons.
+		// bean 初始化入口，也是 getBean() 的入口
 		beanFactory.preInstantiateSingletons();
 	}
 
