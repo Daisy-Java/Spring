@@ -60,18 +60,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements SingletonBeanRegistry {
 
 	/** Cache of singleton objects: bean name to bean instance. */
+	/** 一级缓存：单例对象池，用于存放初始化完成的bean对象 */
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
 	/** Cache of singleton factories: bean name to ObjectFactory. */
+	/** 三级缓存：单例工厂池，用于存放实例化完成的bean对象（执行完构造方法但未执行set方法的bean对象，因此不能在构造方法中进行循环依赖），是解决循环依赖问题的关键 */
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
 	/** Cache of early singleton objects: bean name to bean instance. */
+	/** 二级缓存：饿汉单例对象池，用于存放提前初始化的bean对象，通过allowEarlyReference标志区分是 earlySingletonObject 还是 singletonObject */
 	private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
 
 	/** Set of registered singletons, containing the bean names in registration order. */
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
 
 	/** Names of beans that are currently in creation. */
+	/** 三级缓存：正在创建中的beanName池 */
 	private final Set<String> singletonsCurrentlyInCreation =
 			Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 
@@ -160,6 +164,11 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 * @param beanName the name of the bean to look for
 	 * @param allowEarlyReference whether early references should be created or not
 	 * @return the registered singleton object, or {@code null} if none found
+	 *
+	 * 获取单例bean，先从一级缓存 singletonObjects 中获取 bean，
+	 * 如果 bean 为 null 并且 beanName 在 singletonsCurrentlyInCreation 集合中，则锁定 singletonObjects，从二级缓存 earlySingletonObjects 中获取 bean，
+	 * 如果 bean 为 null 并且 allowEarlyReference 为 true，则从三级缓存 singletonFactories 中获取 bean 工厂，通过 bean 工厂创建 bean，放入 earlySingletonObjects 中并移除 bean 工厂，
+	 * 返回 bean 对象。
 	 */
 	@Nullable
 	protected Object getSingleton(String beanName, boolean allowEarlyReference) {
