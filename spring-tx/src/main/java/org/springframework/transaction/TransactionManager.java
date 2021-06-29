@@ -18,7 +18,7 @@ package org.springframework.transaction;
 
 /**
  * Marker interface for Spring transaction manager implementations,
- * either traditional or reactive.
+ * either traditional(惯例的) or reactive(反应的？？？).
  *
  * @author Juergen Hoeller
  * @since 5.2
