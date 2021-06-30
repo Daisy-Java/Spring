@@ -1,0 +1,23 @@
+初始化流程：
+org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization，bean后处理
+org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary
+org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.createProxy
+    => ProxyFactory proxyFactory = new ProxyFactory(); 实例化代理工厂
+    => org.springframework.aop.framework.ProxyFactory.getProxy(java.lang.ClassLoader) 创建代理对象
+        => org.springframework.aop.framework.JdkDynamicAopProxy.getProxy(java.lang.ClassLoader) JDK动态代理
+
+
+执行流程：
+org.springframework.transaction.interceptor.TransactionInterceptor.invoke
+    => org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction
+        => TransactionAttributeSource tas = getTransactionAttributeSource(); 查询事务信息
+        => TransactionInfo txInfo = createTransactionIfNecessary(ptm, txAttr, joinpointIdentification); 获取事务
+        => try {
+               invocation.proceedWithInvocation();     执行目标方法
+           } catch (Throwable ex) {
+               completeTransactionAfterThrowing(txInfo, ex);   回滚
+           } finally {
+               cleanupTransactionInfo(txInfo);     清理事务信息
+           }
+
+           commitTransactionAfterReturning(txInfo);     提交事务
