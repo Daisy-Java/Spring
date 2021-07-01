@@ -23,7 +23,27 @@ import java.lang.annotation.*;
  * 1. 初始化：org.springframework.validation.beanvalidation.MethodValidationPostProcessor#afterPropertiesSet()
  * 2. 执行：org.springframework.validation.beanvalidation.MethodValidationInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)
  *
- * 似乎只支持本类或子类，对于组合形式的好像不支持。
+ * @Data
+ * public class WorkflowDTO implements Serializable {
+ *     private static final long serialVersionUID = -6481877013500020116L;
+ *
+ *     @NotNull
+ *     @Valid
+ *     private MainInfoEntity main;
+ *
+ *     @NotNull
+ *     @Valid
+ *     private List<DetailInfoEntity> details;
+ * }
+ *
+ * public class MainInfoEntity implements Serializable {
+ *     private static final long serialVersionUID = 7311439559634573723L;
+ *
+ *     private Long id;
+ *
+ *     @NotEmpty
+ *     private String name;
+ * }
  *
  * Variant of JSR-303's {@link javax.validation.Valid}, supporting the
  * specification of validation groups. Designed for convenient use with
