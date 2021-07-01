@@ -19,6 +19,12 @@ package org.springframework.validation.annotation;
 import java.lang.annotation.*;
 
 /**
+ * 参数校验
+ * 1. 初始化：org.springframework.validation.beanvalidation.MethodValidationPostProcessor#afterPropertiesSet()
+ * 2. 执行：org.springframework.validation.beanvalidation.MethodValidationInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)
+ *
+ * 似乎只支持本类或子类，对于组合形式的好像不支持。
+ *
  * Variant of JSR-303's {@link javax.validation.Valid}, supporting the
  * specification of validation groups. Designed for convenient use with
  * Spring's JSR-303 support but not JSR-303 specific.
