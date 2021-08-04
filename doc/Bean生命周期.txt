@@ -9,7 +9,7 @@ org.springframework.context.support.AbstractApplicationContext#refresh
 		=> org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#doCreateBean, 真正执行创建bean
 			=> org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#createBeanInstance, 实例化bean: obtainFromSupplier、instantiateUsingFactoryMethod、autowireConstructor、instantiateBean
 			=> org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#populateBean, 填充 bean 属性: autowireByName、autowireByType、postProcessPropertyValues
-			=> org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#initializeBean(java.lang.String, java.lang.Object, org.springframework.beans.factory.support.RootBeanDefinition), 初始化bean: applyBeanPostProcessorsBeforeInitialization、invokeInitMethods、applyBeanPostProcessorsAfterInitialization
+			=> org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#initializeBean(java.lang.String, java.lang.Object, org.springframework.beans.factory.support.RootBeanDefinition), 初始化bean: invokeAwareMethods、applyBeanPostProcessorsBeforeInitialization、invokeInitMethods、applyBeanPostProcessorsAfterInitialization
 
 
 
